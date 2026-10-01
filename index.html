@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b16">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg">
+<title>Booyah Day</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#070a13;color:#fff}
+header{position:sticky;top:0;z-index:10;background:#0c1020;border-bottom:1px solid #242b42;padding:16px}
+.logo{font-size:23px;font-weight:900}.logo span{color:#ffad00}
+.container{width:92%;max-width:1100px;margin:auto}
+.hero{text-align:center;padding:65px 10px 45px;background:radial-gradient(circle at top,#222d50,#070a13 60%)}
+.badge{display:inline-block;padding:7px 12px;border-radius:20px;background:#211a08;color:#ffc542;font-size:12px;font-weight:bold}
+h1{font-size:clamp(42px,9vw,75px);line-height:.95;margin:20px 0}
+.gold{background:linear-gradient(90deg,#ffd34d,#ff5c32);-webkit-background-clip:text;color:transparent}
+.hero p{color:#aab2c8;max-width:650px;margin:auto;line-height:1.6}
+.btn{border:0;border-radius:12px;padding:13px 18px;font-weight:bold;cursor:pointer}
+.primary{background:linear-gradient(90deg,#ffbd16,#ff5b32);color:#111}
+.secondary{background:#172039;color:#fff;border:1px solid #303a58}
+.buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:25px}
+section{padding:30px 0}h2{margin-bottom:5px}.muted{color:#98a2bc}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{background:#11182a;border:1px solid #29334f;border-radius:18px;padding:18px}
+.tag{display:inline-block;font-size:11px;background:#28203a;color:#ffc84e;padding:6px 9px;border-radius:7px;font-weight:bold}
+.card h3{margin:14px 0 7px}
+.row{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid #29334f}
+.price{font-weight:900;font-size:22px}.prize{color:#43d596;font-weight:bold}
+.card .btn{width:100%;margin-top:10px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.step{background:#10172a;border:1px solid #29334f;border-radius:15px;padding:18px}
+.number{color:#ffb719;font-size:25px;font-weight:bold}
+.notice{background:#171307;border:1px solid #594719;border-radius:15px;padding:18px;color:#f5d889}
+footer{text-align:center;padding:35px 15px;color:#778199;border-top:1px solid #222a40;margin-top:30px;font-size:13px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:20;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}.modalbox{width:100%;max-width:500px;background:#11182a;border:1px solid #303a58;border-radius:20px;padding:22px}
+.close{float:right;background:none;color:#aaa;border:0;font-size:25px;cursor:pointer}
+label{display:block;margin:12px 0 6px;color:#cbd2e3;font-size:13px}
+input{width:100%;padding:13px;background:#080d19;color:white;border:1px solid #303a58;border-radius:10px}
+@media(max-width:750px){.grid{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:430px){.steps{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="container"><div class="logo">BOOYAH <span>DAY</span></div></div></header>
+
+<section class="hero"><div class="container">
+<span class="badge">FREE FIRE CUSTOM TOURNAMENTS</span>
+<h1>PLAY.<br><span class="gold">COMPETE.</span><br>BOOYAH.</h1>
+<p>Join Booyah Day custom tournaments, register your player or team, complete the required registration process and receive tournament updates.</p>
+<div class="buttons">
+<a href="#tournaments"><button class="btn primary">View Tournaments</button></a>
+<a href="#how"><button class="btn secondary">How It Works</button></a>
+</div>
+</div></section>
+
+<section id="tournaments"><div class="container">
+<h2>Tournament Categories</h2><p class="muted">Bermuda • Custom Matches</p>
+<div class="grid">
+<div class="card"><span class="tag">BATTLE ROYALE</span><h3>Full Map Solo</h3><p class="muted">Bermuda • 1 Player</p><div class="row"><span>Entry</span><span class="price">₹20</span></div><div class="row"><span>Prize</span><span class="prize">₹150</span></div><button class="btn primary" onclick="register('Full Map Solo','₹20')">Register</button></div>
+<div class="card"><span class="tag">CLASH SQUAD</span><h3>CS 1v1 — Head/Body</h3><p class="muted">1 Player</p><div class="row"><span>Entry</span><span class="price">₹15</span></div><div class="row"><span>Prize</span><span class="prize">₹100</span></div><button class="btn primary" onclick="register('CS 1v1','₹15')">Register</button></div>
+<div class="card"><span class="tag">CLASH SQUAD</span><h3>CS 4v4 — Head/Body</h3><p class="muted">4 Players</p><div class="row"><span>Entry</span><span class="price">₹60</span></div><div class="row"><span>Prize</span><span class="prize">₹400</span></div><button class="btn primary" onclick="register('CS 4v4','₹60')">Register</button></div>
+<div class="card"><span class="tag">LONE WOLF</span><h3>1v1 — Head/Body</h3><p class="muted">1 Player</p><div class="row"><span>Entry</span><span class="price">₹15</span></div><div class="row"><span>Prize</span><span class="prize">₹100</span></div><button class="btn primary" onclick="register('Lone Wolf 1v1','₹15')">Register</button></div>
+<div class="card"><span class="tag">LONE WOLF</span><h3>2v2 — Head/Body</h3><p class="muted">2 Players</p><div class="row"><span>Entry</span><span class="price">₹30</span></div><div class="row"><span>Prize</span><span class="prize">₹200</span></div><button class="btn primary" onclick="register('Lone Wolf 2v2','₹30')">Register</button></div>
+</div></div></section>
+
+<section id="how"><div class="container">
+<h2>How It Works</h2><p class="muted">Simple tournament flow</p>
+<div class="steps">
+<div class="step"><div class="number">01</div><b>Choose</b><p class="muted">Select your tournament.</p></div>
+<div class="step"><div class="number">02</div><b>Register</b><p class="muted">Enter your player details.</p></div>
+<div class="step"><div class="number">03</div><b>Payment</b><p class="muted">Complete the entry payment.</p></div>
+<div class="step"><div class="number">04</div><b>Play</b><p class="muted">Get room information before the match.</p></div>
+</div></div></section>
+
+<section><div class="container"><div class="notice">
+<b>Community</b><br><br>Join the official Booyah Day community for tournament announcements, room updates and results.<br><br>
+<button class="btn secondary" onclick="community()">Join Community</button>
+</div></div></section>
+
+<footer>© 2026 Booyah Day<br>Custom Tournament Platform</footer>
+
+<div class="modal" id="modal"><div class="modalbox">
+<button class="close" onclick="closeModal()">×</button>
+<h2>Register Tournament</h2><p id="selected" class="muted"></p>
+<form onsubmit="submitForm(event)">
+<label>Player Name</label><input id="player" required>
+<label>Free Fire UID</label><input id="uid" required inputmode="numeric">
+<label>Team / Player Name</label><input id="team" required>
+<label>WhatsApp / Telegram</label><input id="contact">
+<button class="btn primary" style="width:100%;margin-top:18px">Continue</button>
+</form>
+</div></div>
+
+<script>
+let tournament="";
+function register(name,entry){
+ tournament=name+" • Entry "+entry;
+ document.getElementById("selected").innerText=tournament;
+ document.getElementById("modal").classList.add("show");
+}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+function submitForm(e){
+ e.preventDefault();
+ alert("Registration saved for this demo.\n\nTournament: "+tournament+
+ "\nPlayer: "+document.getElementById("player").value+
+ "\nUID: "+document.getElementById("uid").value);
+ closeModal();
+}
+function community(){alert("Add your official WhatsApp or Telegram group link here.")}
+if("serviceWorker" in navigator){window.addEventListener("load",()=>{navigator.serviceWorker.register("sw.js").catch(()=>{})})}
+</script>
+</body>
+</html>

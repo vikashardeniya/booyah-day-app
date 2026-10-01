@@ -1,0 +1,10 @@
+{
+  "name": "Booyah Day",
+  "short_name": "Booyah Day",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#070a13",
+  "theme_color": "#080b16",
+  "description": "Booyah Day Free Fire Custom Tournament Platform",
+  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
