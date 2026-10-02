@@ -1,3 +1,108 @@
+<!-- पेमेंट पॉप-अप मॉडल (Modal) -->
+<div id="paymentModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background:#121212; border: 2px solid #ff9900; padding:20px; border-radius:15px; z-index:1000; text-align:center; width:90%; max-width:350px; color:#fff;">
+    <h3 style="color:#ff9900; margin-bottom:10px;">Booyah Day Payment</h3>
+    <p style="font-size:14px; margin-bottom:15px;">टूर्नामेंट एंट्री फीस (₹20) जमा करने के लिए नीचे दिए गए QR Code को स्कैन करें:</p>
+    
+    <!-- आपका भेजा हुआ QR Code स्कैनर -->
+    <img src="https://ibb.co" alt="UPI QR Code" style="width:200px; height:200px; border-radius:10px; margin-bottom:15px; border: 3px solid #fff;">
+    
+    <p style="font-size:12px; color:#aaa; margin-bottom:15px;">UPI ID: 7734811684@slc</p>
+    <p style="font-size:13px; color:#00ff00; font-weight:bold;">⚠️ जरूरी स्टेप: पेमेंट करने के बाद स्क्रीनशॉट अपने WhatsApp ग्रुप या एडमिन नंबर पर जरूर भेजें ताकि आपका स्लॉट कन्फर्म हो सके!</p>
+    
+    <button onclick="closePayment()" style="background:#ff9900; color:#000; border:none; padding:10px 20px; border-radius:8px; font-weight:bold; cursor:pointer; width:100%; margin-top:10px;">मैने स्क्रीनशॉट भेज दिया है</button>
+</div>
+
+<script>
+function handleRegistrationSubmit(event) {
+    event.preventDefault();
+    // खिलाड़ी का डेटा स्टोर करने या आगे भेजने का लॉजिक
+    // इसके बाद पेमेंट पॉप-अप खोलें
+    document.getElementById("paymentModal").style.display = "block";
+}
+function closePayment() {
+    document.getElementById("paymentModal").style.display = "none";
+    alert("आपका रजिस्ट्रेशन सबमिट हो गया है! एडमिन स्क्रीनशॉट वेरीफाई करके आपको रूम आईडी भेज देंगे।");
+}
+</script>
+<script>
+// जब खिलाड़ी फॉर्म सबमिट करेगा
+function handleRegistrationSubmit(event) {
+    event.preventDefault();
+    
+    // फॉर्म से डेटा निकालना (सुनिश्चित करें कि आपके इनपुट फील्ड्स में ये IDs हों)
+    var registrationData = {
+        tournamentName: document.getElementById("tournamentName") ? document.getElementById("tournamentName").value : "Full Map Solo",
+        playerName: document.getElementById("playerName").value,
+        playerUid: document.getElementById("playerUid").value,
+        whatsappNumber: document.getElementById("whatsappNumber").value
+    };
+
+    // Google Sheet वाले URL पर डेटा भेजना
+    // ⚠️ नीचे वाले लिंक को अपने असली Google Script URL से बदलें
+    var googleSheetUrl = "YOUR_GOOGLE_WEB_APP_URL"; 
+
+    fetch(googleSheetUrl, {
+        method: "POST",
+        mode: "no-cors", // सिक्योरिटी एरर से बचने के लिए
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(registrationData)
+    })
+    .then(function() {
+        // डेटा जाने के बाद पेमेंट स्कैनर दिखाना
+        document.getElementById("paymentModal").style.display = "block";
+    })
+    .catch(function(error) {
+        console.error("Error:", error);
+        alert("कुछ गड़बड़ हुई, कृपया दोबारा कोशिश करें।");
+    });
+}
+
+function closePayment() {
+    document.getElementById("paymentModal").style.display = "none";
+    alert("आपका रजिस्ट्रेशन सुरक्षित हो गया है और डेटा शीट में सेव हो गया है! स्क्रीनशॉट भेजने के बाद एडमिन स्लॉट कन्फर्म करेंगे।");
+}
+</script>
+<script>
+function handleRegistrationSubmit(event) {
+    event.preventDefault();
+    
+    // 1. खिलाड़ी जो फॉर्म में भरेगा, उसका डेटा निकालना
+    // (सुनिश्चित करें कि आपके इनपुट बॉक्स की id यही हो: playerName, playerUid, whatsappNumber)
+    var pName = document.getElementById("playerName").value;
+    var pUid = document.getElementById("playerUid").value;
+    var pPhone = document.getElementById("whatsappNumber").value;
+    var tName = document.getElementById("tournamentName") ? document.getElementById("tournamentName").value : "Full Map Solo";
+
+    // 2. ⚠️ यहाँ '917734811684' की जगह अपना असली WhatsApp नंबर डालें (शुरुआत में 91 जरूर लगाएं)
+    var myWhatsAppNumber = "917734811684"; 
+
+    // 3. WhatsApp के लिए ऑटोमैटिक मैसेज तैयार करना
+    var message = "💥 *Booyah Day Tournament Registration* 💥\n\n" +
+                  "🏆 *टूर्नामेंट:* " + tName + "\n" +
+                  "👤 *खिलाड़ी का नाम:* " + pName + "\n" +
+                  "🆔 *Free Fire UID:* " + pUid + "\n" +
+                  "📞 *WhatsApp नंबर:* " + pPhone + "\n\n" +
+                  "कृपया मुझे पेमेंट के बाद का स्लॉट कन्फर्मेशन दें।";
+
+    // मैसेज को इंटरनेट लिंक के हिसाब से सेट करना
+    var whatsappUrl = "https://whatsapp.com" + myWhatsAppNumber + "&text=" + encodeURIComponent(message);
+
+    // 4. खिलाड़ी को आपके WhatsApp पर भेजना (यह नए टैब में खुलेगा)
+    window.open(whatsappUrl, '_blank');
+
+    // 5. इसके तुरंत बाद ऐप के अंदर QR Code वाला पेमेंट पॉप-अप खोलना
+    if(document.getElementById("paymentModal")) {
+        document.getElementById("paymentModal").style.display = "block";
+    }
+}
+
+function closePayment() {
+    document.getElementById("paymentModal").style.display = "none";
+    alert("धन्यवाद! अगर आपने WhatsApp पर डिटेल्स और पेमेंट स्क्रीनशॉट भेज दिया है, तो एडमिन जल्द ही आपका स्लॉट कन्फर्म कर देंगे।");
+}
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
